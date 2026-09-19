@@ -2,15 +2,25 @@ import { useState } from 'react'
 import './App.css'
 import { ChipDetail } from './components/ChipDetail'
 import { ChipList } from './components/ChipList'
+import { DiagnosticsPanel } from './components/DiagnosticsPanel'
 import { ScanPanel } from './components/ScanPanel'
 import { useChips } from './hooks/useChips'
+import { useDiagnostics } from './hooks/useDiagnostics'
 import { useNfc } from './hooks/useNfc'
 
 export default function App() {
   const { cards, recordReading } = useChips()
+  const diagnostics = useDiagnostics()
   const nfc = useNfc((reading) => {
-    void recordReading(reading)
-  })
+    recordReading(reading).catch((error: unknown) => {
+      diagnostics.log(
+        'error',
+        `No se pudo guardar la ficha: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      )
+    })
+  }, diagnostics.log)
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
 
   const selected =
@@ -35,6 +45,12 @@ export default function App() {
       </section>
 
       {selected ? <ChipDetail card={selected} /> : null}
+
+      <DiagnosticsPanel
+        env={diagnostics.env}
+        logs={diagnostics.logs}
+        onClear={diagnostics.clear}
+      />
     </main>
   )
 }

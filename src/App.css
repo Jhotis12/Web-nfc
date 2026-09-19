@@ -207,3 +207,104 @@
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+/* Diagnostics */
+
+.diag {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--panel);
+  padding: 12px 14px;
+}
+
+.diag__summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.diag__env {
+  list-style: none;
+  margin: 12px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.88rem;
+}
+
+.diag__env li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.diag__env span:first-child {
+  color: var(--muted);
+}
+
+.diag__env span:last-child {
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  text-align: right;
+  word-break: break-all;
+}
+
+.diag__actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.diag__actions button {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel-strong);
+  cursor: pointer;
+}
+
+.diag__empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.diag__log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.diag__entry {
+  display: flex;
+  gap: 8px;
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.diag__time {
+  color: var(--muted);
+  flex: none;
+}
+
+.diag__msg {
+  word-break: break-word;
+}
+
+.diag__entry--success .diag__msg {
+  color: #86efac;
+}
+
+.diag__entry--error .diag__msg {
+  color: var(--danger);
+}
+
+.diag__entry--info .diag__msg {
+  color: var(--text);
+}
+
